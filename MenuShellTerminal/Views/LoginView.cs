@@ -48,7 +48,6 @@ namespace MenuShellTerminal.Views
                     break;
                 case ConsoleKey.N:
                     break;
-                    
             }
             return this;
         }

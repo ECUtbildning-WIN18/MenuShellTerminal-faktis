@@ -10,17 +10,17 @@ namespace Domain
     {
         public static HashSet<string> UserNames { get; set; } = new HashSet<string>() { "Admin" };
         public static Dictionary<string, User> Users { get; set; } = new Dictionary<string, User>();
-        XDocument UsersXML = new XDocument();
+        public static XDocument UsersXML = XDocument.Load("Users.xml");
         public Database()
         {
             
             Users.Add("Admin", new SystemAdministrator("Admin", "PassWord"));
-            XElement User = new XElement("Users",
+            /*XElement User = new XElement("Users",
                 new XElement("Admin",
                     new XElement("Name",Users["Admin"].UserName),
                     new XElement("PassWord", Users["Admin"].SaltHashPassWord)));
             UsersXML.Add(User);
-            UsersXML.Save("Users.xml");
+            UsersXML.Save("Users.xml");*/
         }
     }
 }

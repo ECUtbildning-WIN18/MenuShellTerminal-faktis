@@ -18,7 +18,6 @@ namespace MenuShellTerminal
             {
                 view = view.ViewIt();
             }
-
         }
     }
 }

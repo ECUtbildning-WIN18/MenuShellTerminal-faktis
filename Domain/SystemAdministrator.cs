@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Domain
 {
-    class SystemAdministrator : User
+    public class SystemAdministrator : User
     {
         public SystemAdministrator(string userName, string passWord) : base(userName, passWord, UserType.SystemAdministrator) { }
     }

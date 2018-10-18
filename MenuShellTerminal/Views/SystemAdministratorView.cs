@@ -21,7 +21,8 @@ namespace MenuShellTerminal.Views
                 case ConsoleKey.A:
                     return new AddUserView();
                 case ConsoleKey.D:
-                    Console.Clear();
+                    return new SearchUserView();
+                    /*Console.Clear();
                     Console.WriteLine("-----Users-----");
                     foreach(string user in Database.UserNames)
                     {
@@ -33,7 +34,7 @@ namespace MenuShellTerminal.Views
                     {
                         return new DeleteUserView(userName);
                     }
-                    return this;
+                    return this;*/
                 case ConsoleKey.L:
                     return new LoginView();
             }
