@@ -1,7 +1,5 @@
 ﻿using Domain;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Services
 {
@@ -9,5 +7,6 @@ namespace Services
     {
         public static User ActiveUser = null;
         public static User UserToView = null;
+        public static List<string> SearchResults = null;
     }
 }

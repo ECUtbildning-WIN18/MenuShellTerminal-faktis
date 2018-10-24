@@ -1,6 +1,4 @@
 ﻿using MenuShellTerminal.Views;
-using Services;
-using System;
 using Domain;
 
 

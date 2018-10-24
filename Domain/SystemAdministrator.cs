@@ -1,9 +1,4 @@
-﻿//using Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Domain
+﻿namespace Domain
 {
     public class SystemAdministrator : User
     {

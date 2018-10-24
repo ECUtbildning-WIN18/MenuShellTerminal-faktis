@@ -1,15 +1,13 @@
 ﻿using Domain;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Services
 {
-    public class SearchAndFind
+    public static class SearchAndFind
     {
-        public List<string> StringOfUserNamesIncludingString(string searchCriteria)
+        public static void GenerateListOfUserNames(string searchCriteria)
         {
-            List<string> searchResults = new List<string>();
+            Globals.SearchResults = new List<string>();
             foreach (string userName in Database.UserNames)
             {
                 var different = false;
@@ -22,11 +20,11 @@ namespace Services
                     if (different) break;
 
                 }
-                if (!different) searchResults.Add(userName);
+                if (!different) Globals.SearchResults.Add(userName);
             }
-            return searchResults;
         }
-        public User UserWithUserName(string userName)
+
+        public static User UserWithUserName(string userName)
         {
             return Database.Users[userName];
         }
