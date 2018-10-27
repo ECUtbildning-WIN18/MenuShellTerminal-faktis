@@ -8,6 +8,7 @@ namespace MenuShellTerminal.Views
     {
         public override View ViewIt()
         {
+            Console.Clear();
             ViewHandler.CurrentView = this;
             Console.Title = "Add User";
             foreach (string screenString in ViewHandler.AddUserScreen())
@@ -18,11 +19,15 @@ namespace MenuShellTerminal.Views
             var passWord = Console.ReadLine();
             Console.SetCursorPosition(10, 3);
             var userType = Console.ReadLine();
-            Console.WriteLine("Is this correct? (Y)es or (N)o !!!");
-            var key = Console.ReadKey().Key;
+            Console.WriteLine("Is this correct? (Y)es or (N)o !!! \n" +
+                "(Esc) to go back to Admin View");
+            var key = Console.ReadKey();
             Console.Clear();
-            var message = (CreateUser.CreateController(key, userName, passWord, userType));
-            if(message != "SystemAdministrator" )
+            
+            var message = CreateUser.CreateController(
+                key.Key, 
+                userName, passWord, userType);
+            if(message != "SystemAdministrator" && message != "AgainMyself")
             {
                 Console.WriteLine(message);
                 Thread.Sleep(2000);                

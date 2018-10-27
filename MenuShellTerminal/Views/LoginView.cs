@@ -20,7 +20,7 @@ namespace MenuShellTerminal.Views
             Console.WriteLine("Is this correct? (Y)es or (N)o !!!");
             var key = Console.ReadKey().Key;
             var message = (Login.LoginController(key, userName, passWord));
-            if(message != "SystemAdministrator" && message != "Customer" )
+            if(message != "SystemAdministrator" && message != "Customer" && message != "AgainMyself")
             {
                 Console.WriteLine(message);
                 Thread.Sleep(2000);
