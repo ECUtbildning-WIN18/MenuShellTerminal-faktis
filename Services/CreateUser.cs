@@ -1,7 +1,4 @@
-
-﻿using System;
-//using System.Xml.Linq;
-
+using System;
 using Domain;
 
 namespace Services
@@ -15,22 +12,13 @@ namespace Services
                     var createMessage = TryCreate(userName, passWord, userType);
                     if (createMessage == "Created")
                     {
-
-                        if (Globals.ActiveUser.UserType == UserType.SystemAdministrator)
-                        {
                             return "SystemAdministrator";
-                        }
-                        else if (Globals.ActiveUser.UserType == UserType.Customer)
-                        {
-                            return "Customer";
-                        }
                     }
                     else
                     {
-
                         return createMessage;
                     }
-                    break;
+                    
                 case ConsoleKey.N:
                     break;
             }

@@ -22,7 +22,7 @@ namespace MenuShellTerminal.Views
             var key = Console.ReadKey().Key;
             Console.Clear();
             var message = (CreateUser.CreateController(key, userName, passWord, userType));
-            if(message != "SystemAdministrator" && message != "Customer" )
+            if(message != "SystemAdministrator" )
             {
                 Console.WriteLine(message);
                 Thread.Sleep(2000);                
