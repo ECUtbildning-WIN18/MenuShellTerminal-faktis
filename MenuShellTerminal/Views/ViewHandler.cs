@@ -31,7 +31,18 @@ namespace MenuShellTerminal
                 "-----Add User-----" ,
                 "Userame:" ,
                 "Password:" ,
-                "UserType:"
+                "UserType:" ,
+                "Input" ,
+                "10" ,
+                "1" ,
+                "Input" ,
+                "10" ,
+                "2" ,
+                "Input" ,
+                "10" ,
+                "3" ,
+                "Is this correct? (Y)es or (N)o !!! \n" +
+                "(Esc) to go back to Admin View"
             };
         }
         public static View CurrentView = null;
