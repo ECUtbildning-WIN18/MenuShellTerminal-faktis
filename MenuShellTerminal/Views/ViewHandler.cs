@@ -41,7 +41,7 @@ namespace MenuShellTerminal
                 "Input" ,
                 "10" ,
                 "3" ,
-                "Is this correct? (Y)es or (N)o !!! \n" +
+                "Is this correct? (Y)es or (N)o !!! ",
                 "(Esc) to go back to Admin View"
             };
         }
