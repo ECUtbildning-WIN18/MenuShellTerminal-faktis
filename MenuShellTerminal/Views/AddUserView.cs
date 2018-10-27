@@ -8,11 +8,12 @@ namespace MenuShellTerminal.Views
     {
         private bool xOn = false;
         private bool yOn = false;
-        private string userName = "False";
-        private string password = "False";
-        private string userType = "False";
         private int xPos = 0;
         private int yPos = 0;
+
+        private string password = "False";
+        public string UserType { get; private set; } = "False";
+        public string UserName { get; private set; } = "False";
 
         public override View ViewIt()
         {
@@ -24,15 +25,15 @@ namespace MenuShellTerminal.Views
             Console.Clear();
             var message = CreateUser.CreateController(
                 key.Key, 
-                userName, password, userType);
+                UserName, password, UserType);
             if(message != "SystemAdministrator" && message != "AgainMyself")
             {
                 Console.WriteLine(message);
                 Thread.Sleep(2000);                
             }
-            userName = "False";
+            UserName = "False";
             password = "False";
-            userType = "False";
+            UserType = "False";
             return ViewHandler.ChangeView(message);
         }
 
@@ -44,12 +45,12 @@ namespace MenuShellTerminal.Views
                 {
                     yPos = int.Parse(screenString);
                     Console.SetCursorPosition(xPos, yPos);
-                    if (userName == "False")
-                        userName = Console.ReadLine();
+                    if (UserName == "False")
+                        UserName = Console.ReadLine();
                     else if (password == "False")
                         password = Console.ReadLine();
-                    else if (userType == "False")
-                        userType = Console.ReadLine();
+                    else if (UserType == "False")
+                        UserType = Console.ReadLine();
                     xOn = false;
                     yOn = false;
                     

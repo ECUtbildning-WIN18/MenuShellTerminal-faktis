@@ -10,7 +10,14 @@ namespace MenuShellTerminal
             {
                 "Login" ,
                 "UserName:" ,
-                "Password:"
+                "Password:",
+                "Input" ,
+                "10" ,
+                "1" ,
+                "Input" ,
+                "10" ,
+                "2" ,
+                "Is this correct? (Y)es or (N)o !!!"
             };
         }
         public static List<string> AdminScreen()
