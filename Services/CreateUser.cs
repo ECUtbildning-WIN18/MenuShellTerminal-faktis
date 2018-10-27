@@ -1,34 +1,71 @@
-﻿using System.Xml.Linq;
+﻿using System;
+using System.Xml.Linq;
 using Domain;
 
 namespace Services
 {
-    public class CreateUser
+    public static class CreateUser
     {
-        public string TryCreate(string userName, string passWord, string userType)
+        public static string CreateController(ConsoleKey key, string userName, string passWord, string userType)
+        {
+            switch (key)
+            {
+                case ConsoleKey.Y:
+                    var createMessage = TryCreate(userName, passWord, userType);
+                    if (createMessage == "Created")
+                    {
+
+                        if (Globals.ActiveUser.UserType == UserType.SystemAdministrator)
+                        {
+                            return "SystemAdministrator";
+                        }
+                        else if (Globals.ActiveUser.UserType == UserType.Customer)
+                        {
+                            return "Customer";
+                        }
+                    }
+                    else
+                    {
+
+                        return createMessage;
+                    }
+                    break;
+                case ConsoleKey.N:
+                    break;
+            }
+            return "AgainMyself";
+        }
+        public static string TryCreate(string userName, string passWord, string userType)
         {
 
             if (!Database.UserNames.Contains(userName))
             {
-                if (userType == "Customer")
+                switch (userType)
                 {
-                    Database.Users.Add(userName, new Customer(userName, passWord));
-                    Database.UserNames.Add(userName);
+                    case "Customer":
+                        Database.Users.Add(userName, new Customer(userName, passWord));
+                        Database.UserNames.Add(userName);
+                        return "Created";
+                    case "Admin":
+                        Database.Users.Add(userName, new SystemAdministrator(userName, passWord));
+                        Database.UserNames.Add(userName);
+                        return "Created";
+                    default:
+                        return userType + " is NOT a valid type.\n" +
+                            "Valid types are:\n" +
+                            "Customer, Admin";
+
                 }
-                else if(userType == "Admin")
-                {
-                    Database.Users.Add(userName, new SystemAdministrator(userName, passWord));
-                    Database.UserNames.Add(userName);
-                }
-                XElement User =
-                    new XElement("User",
-                    new XElement("Name", userName),
-                    new XElement("Type", userType),
-                    new XElement("PassWord", Database.Users[userName].SaltHashPassWord));
                 
-                Database.UsersXML.Root.Add(User);
-                Database.UsersXML.Save("Users.xml");
-                return "Created";
+                //XElement User =
+                //    new XElement("User",
+                //    new XElement("Name", userName),
+                //    new XElement("Type", userType),
+                //    new XElement("PassWord", Database.Users[userName].SaltHashPassWord));
+                
+                //Database.UsersXML.Root.Add(User);
+                //Database.UsersXML.Save("Users.xml");
+                
             }
             else
             {

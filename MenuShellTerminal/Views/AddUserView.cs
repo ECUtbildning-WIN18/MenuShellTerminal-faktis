@@ -8,36 +8,26 @@ namespace MenuShellTerminal.Views
     {
         public override View ViewIt()
         {
-            Console.Clear();
+            ViewHandler.CurrentView = this;
             Console.Title = "Add User";
-            Console.WriteLine("UserName: ");
-            Console.WriteLine("PassWord ");
-            Console.WriteLine("UserType ");
-            Console.SetCursorPosition(10, 0);
-            var userName = Console.ReadLine();
+            foreach (string screenString in ViewHandler.AddUserScreen())
+                Console.WriteLine(screenString);
             Console.SetCursorPosition(10, 1);
-            var passWord = Console.ReadLine();
+            var userName = Console.ReadLine();
             Console.SetCursorPosition(10, 2);
+            var passWord = Console.ReadLine();
+            Console.SetCursorPosition(10, 3);
             var userType = Console.ReadLine();
             Console.WriteLine("Is this correct? (Y)es or (N)o !!!");
             var key = Console.ReadKey().Key;
-            switch (key)
+            Console.Clear();
+            var message = (CreateUser.CreateController(key, userName, passWord, userType));
+            if(message != "SystemAdministrator" && message != "Customer" )
             {
-                case ConsoleKey.Y:
-                    var create = new CreateUser();
-                    var createMessage = create.TryCreate(userName, passWord, userType);
-                    if (createMessage != "Created")
-                    {
-                        Console.WriteLine(createMessage);
-                        Thread.Sleep(2000);
-                        return this;
-                    }
-                    return new SystemAdministratorView();
-
-                case ConsoleKey.N:
-                    break;
+                Console.WriteLine(message);
+                Thread.Sleep(2000);                
             }
-            return this;
+            return ViewHandler.ChangeView(message);
         }
     
     }

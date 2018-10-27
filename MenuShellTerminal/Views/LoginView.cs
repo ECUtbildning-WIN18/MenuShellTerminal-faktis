@@ -9,45 +9,26 @@ namespace MenuShellTerminal.Views
     {
         public override View ViewIt()
         {
+
             Console.Clear();
-            Console.Title = "Login";
-            Console.WriteLine("UserName: ");
-            Console.WriteLine("PassWord ");
-            Console.SetCursorPosition(10, 0);
-            var userName = Console.ReadLine();
+            ViewHandler.CurrentView = this;
+            foreach(string screenString in ViewHandler.MenuScreen())
+                Console.WriteLine(screenString);
             Console.SetCursorPosition(10, 1);
+            var userName = Console.ReadLine();
+            Console.SetCursorPosition(10, 2);
             var passWord = Console.ReadLine();
             Console.WriteLine("Is this correct? (Y)es or (N)o !!!");
             var key = Console.ReadKey().Key;
-            Console.Clear();
-            switch (key)
+            var message = (Login.LoginController(key, userName, passWord));
+            if(message != "SystemAdministrator" && message != "Customer" )
             {
-                case ConsoleKey.Y:
-                    var login = new Login();
-                    var loginMessage = login.TryLogin(userName, passWord); 
-                    if (loginMessage == "LogIn")
-                    {
-
-                        if(Globals.ActiveUser.UserType == UserType.SystemAdministrator)
-                        {
-                             return new SystemAdministratorView();
-                        }
-                        else if (Globals.ActiveUser.UserType == UserType.Customer)
-                        {
-                            return new CustomerView();
-                        }
-                    }
-                    else
-                    {
-                        
-                        Console.WriteLine(loginMessage);
-                        Thread.Sleep(2000);
-                    }
-                    break;
-                case ConsoleKey.N:
-                    break;
+                Console.WriteLine(message);
+                Thread.Sleep(2000);
             }
-            return this;
+            return ViewHandler.ChangeView(message);
+
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Services;
 using System;
+using System.Threading;
 
 namespace MenuShellTerminal.Views
 {
@@ -9,19 +10,28 @@ namespace MenuShellTerminal.Views
         {
             Console.Clear();
             var iterator = 1;
-            foreach (string user in Globals.SearchResults)
+            if (Globals.SearchResults.Count != 0)
             {
-                Console.WriteLine($"{iterator++}: {user}");
+                foreach (string user in Globals.SearchResults)
+                {
+                    Console.WriteLine($"{iterator++}: {user}");
 
+                }
+                Console.WriteLine("Index of User to view: ");
+                int indexOfUser = -1;
+                if (int.TryParse(Console.ReadLine(), out indexOfUser))
+                {
+                    Globals.UserToView = SearchAndFind.UserWithUserName(Globals.SearchResults[indexOfUser - 1]);
+                    return new UserInformativeView();
+                }
             }
-            Console.WriteLine("Index of User to view: ");
-
-            int indexOfUser = -1;
-            if (int.TryParse(Console.ReadLine(), out indexOfUser))
+            else
             {
-                Globals.UserToView = SearchAndFind.UserWithUserName(Globals.SearchResults[indexOfUser - 1]);
-                return new UserInformativeView();
+                Console.WriteLine("No user found");
+                Thread.Sleep(2000);
             }
+
+            
             return new SystemAdministratorView();
         }
     }

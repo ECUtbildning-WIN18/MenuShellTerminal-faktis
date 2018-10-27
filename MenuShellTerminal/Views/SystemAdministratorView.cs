@@ -7,22 +7,30 @@ namespace MenuShellTerminal.Views
         public override View ViewIt()
         {
             Console.Clear();
+            ViewHandler.CurrentView = this;
             Console.Title = "SystemAdministrator";
-            Console.WriteLine("-----Options-----");
-            Console.WriteLine("(A)dd User");
-            Console.WriteLine("(S)earch User");
-            Console.WriteLine("(L)og Out");
+            foreach (string screenString in ViewHandler.AdminScreen())
+                Console.WriteLine(screenString);
             var key = Console.ReadKey().Key;
+            Console.Clear();
+            return ChangeView(key);
+        }
+
+        private View ChangeView(ConsoleKey key)
+        {
             switch (key)
             {
                 case ConsoleKey.A:
-                    return new AddUserView();
+                    return ViewHandler.ChangeView("AddUser");
+
                 case ConsoleKey.S:
-                    return new SearchUserView();
+                    return ViewHandler.ChangeView("SearchUser");
+
                 case ConsoleKey.L:
-                    return new LoginView();
+                    return ViewHandler.ChangeView("LogOut");
+                default:
+                    return ViewHandler.ChangeView("AgainMyself");
             }
-            return this;
         }
     }
 }
