@@ -1,3 +1,4 @@
+
 ﻿using System.Collections.Generic;
 
 namespace Domain
@@ -8,3 +9,4 @@ namespace Domain
         public static List<string> screenStrings = new List<string> { "Empty" };
     }
 }
+

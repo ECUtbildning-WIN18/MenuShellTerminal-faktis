@@ -2,6 +2,7 @@
 using System;
 using System.Threading;
 
+
 namespace MenuShellTerminal.Views
 {
     public class ListUserView : View
@@ -30,7 +31,6 @@ namespace MenuShellTerminal.Views
                 Console.WriteLine("No user found");
                 Thread.Sleep(2000);
             }
-
             
             return new SystemAdministratorView();
         }

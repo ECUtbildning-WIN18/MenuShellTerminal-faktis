@@ -31,6 +31,8 @@ namespace MenuShellTerminal.Views
                 default:
                     return ViewHandler.ChangeView("AgainMyself");
             }
+
+            
         }
     }
 }

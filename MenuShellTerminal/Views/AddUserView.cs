@@ -29,6 +29,5 @@ namespace MenuShellTerminal.Views
             }
             return ViewHandler.ChangeView(message);
         }
-    
     }
 }

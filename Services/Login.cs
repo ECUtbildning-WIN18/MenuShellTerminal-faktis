@@ -1,6 +1,5 @@
 ﻿using Domain;
 using System;
-using System.Threading;
 
 namespace Services
 {
@@ -35,6 +34,7 @@ namespace Services
             }
             return "AgainMyself";
         }
+
         public static string TryLogin(string userName, string passWord)
         {
             if (Database.UserNames.Contains(userName))

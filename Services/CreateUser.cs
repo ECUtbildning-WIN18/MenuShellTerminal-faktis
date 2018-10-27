@@ -1,10 +1,11 @@
+
 ﻿using System;
-using System.Xml.Linq;
+//using System.Xml.Linq;
+
 using Domain;
 
 namespace Services
-{
-    public static class CreateUser
+{    public static class CreateUser
     {
         public static string CreateController(ConsoleKey key, string userName, string passWord, string userType)
         {
@@ -35,6 +36,8 @@ namespace Services
             }
             return "AgainMyself";
         }
+        
+    
         public static string TryCreate(string userName, string passWord, string userType)
         {
 
@@ -65,7 +68,7 @@ namespace Services
                 
                 //Database.UsersXML.Root.Add(User);
                 //Database.UsersXML.Save("Users.xml");
-                
+
             }
             else
             {

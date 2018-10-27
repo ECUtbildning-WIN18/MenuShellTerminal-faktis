@@ -9,7 +9,6 @@ namespace MenuShellTerminal.Views
     {
         public override View ViewIt()
         {
-
             Console.Clear();
             ViewHandler.CurrentView = this;
             foreach(string screenString in ViewHandler.MenuScreen())
@@ -27,6 +26,7 @@ namespace MenuShellTerminal.Views
                 Thread.Sleep(2000);
             }
             return ViewHandler.ChangeView(message);
+
 
 
         }
