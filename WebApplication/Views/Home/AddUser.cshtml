@@ -1,0 +1,47 @@
+﻿@model WebApplication.Models.AddUserModel
+@{
+    ViewBag.Title = "Add User";
+}
+@using (Html.BeginForm("Add", "Home", FormMethod.Post))
+
+{
+
+
+
+
+    @Html.TextBoxFor(model => model.UserName, null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.UserName)
+
+    @Html.TextBoxFor(model => model.Password, null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.Password)
+
+    @Html.TextBoxFor(model => model.UserType, null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.UserType)
+
+    if (Model.UserType != "" && Model.UserName != "" && Model.Password != "")
+    {
+        @Services.CreateUser.TryCreate(Model.UserName, Model.Password, Model.UserType);
+        <button type="submit">
+            Add
+        </button>
+    }
+
+}
+
+
+
+@*@{
+        ViewBag.Title = "Add User";
+    }
+    <h2>@ViewBag.Title</h2>
+    @foreach (var message in ViewHandler.AddUserScreen())
+    {
+        @message
+
+        <h2>@Html.TextBox(@message,null, new { @class = "form-control" })</h2>
+    }
+        <input type="submit" />
+
+
+
+    <p>Use this area to provide additional information.</p>*@
