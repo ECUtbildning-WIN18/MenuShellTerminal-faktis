@@ -1,5 +1,4 @@
-﻿using Domain;
-using Services;
+﻿using Services;
 using System;
 using System.Threading;
 
@@ -13,19 +12,31 @@ namespace MenuShellTerminal.Views
         private string password = "False";
         private int xPos = 0;
         private int yPos = 0;
+        public void Init()
+        {
+            xOn = false;
+            yOn = false;
+            userName = "False";
+            password = "False";
+            xPos = 0;
+            yPos = 0;
+
+        }
         public override View ViewIt()
         {
             Console.Clear();
             ViewHandler.CurrentView = this;
-            Console.Title ="Login";
+            Console.Title = "Login";
             Input();
             var key = Console.ReadKey().Key;
+            
             var message = (Login.LoginController(key, userName, password));
-            if(message != "SystemAdministrator" && message != "Customer" && message != "AgainMyself")
+            if (message != "SystemAdministrator" && message != "Customer" && message != "AgainMyself")
             {
                 Console.WriteLine(message);
                 Thread.Sleep(2000);
             }
+            Init();
             return ViewHandler.ChangeView(message);
 
 
@@ -45,7 +56,7 @@ namespace MenuShellTerminal.Views
                         password = Console.ReadLine();
                     xOn = false;
                     yOn = false;
-                    
+
                 }
                 else if (xOn && !yOn)
                 {

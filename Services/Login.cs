@@ -28,11 +28,12 @@ namespace Services
 
                         return loginMessage;
                     }
-                    break;
+                    return  "AgainMyself";
                 case ConsoleKey.N:
-                    break;
+                    return "AgainMyself";
             }
             return "AgainMyself";
+
         }
 
         public static string TryLogin(string userName, string passWord)
