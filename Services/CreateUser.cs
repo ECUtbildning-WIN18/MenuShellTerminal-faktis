@@ -1,4 +1,5 @@
 using System;
+using System.Data.SqlClient;
 using Domain;
 
 namespace Services
@@ -34,32 +35,48 @@ namespace Services
 
             if (!Database.UserNames.Contains(userName))
             {
-                switch (userType)
+                var connectionString = "Data Source=(local);Initial Catalog=MenuShell; Integrated Security=true";
+                using (var connection = new System.Data.SqlClient.SqlConnection(connectionString))
                 {
-                    case "Customer":
-                        Database.Users.Add(userName, new Customer(userName, passWord));
-                        Database.UserNames.Add(userName);
-                        return "Created";
-                    case "Admin":
-                        Database.Users.Add(userName, new SystemAdministrator(userName, passWord));
-                        Database.UserNames.Add(userName);
-                        return "Created";
-                    default:
-                        return userType + " is NOT a valid type.\n" +
-                            "Valid types are:\n" +
-                            "Customer, Admin";
+                    connection.Open();
 
+                    switch (userType)
+                    {
+                        case "Customer":
+                            Database.Users.Add(userName, new Customer(userName, passWord));
+                            Database.UserNames.Add(userName);
+                            SqlCommand command= new SqlCommand($"INSERT INTO [User] VALUES('{userName}','{passWord}','Customer')", connection);
+                            try
+                            {
+                                command.ExecuteNonQuery();
+                                
+                            }
+                            catch (SqlException ex)
+                            {
+                                return "Sql command did not work";
+                            }
+                            
+                            return "Created";
+                        case "Admin":
+                            Database.Users.Add(userName, new SystemAdministrator(userName, passWord));
+                            Database.UserNames.Add(userName);
+                            command= new SqlCommand($"INSERT INTO [User] VALUES('{userName}','{passWord}','SystemAdministrator')", connection);
+                            try
+                            {
+                                command.ExecuteNonQuery();
+                                
+                            }
+                            catch (SqlException ex)
+                            {
+                                return "Sql command did not work";
+                            }
+                            return "Created";
+                        default:
+                            return userType + " is NOT a valid type.\n" +
+                                   "Valid types are:\n" +
+                                   "Customer, Admin";
+                    }
                 }
-                
-                //XElement User =
-                //    new XElement("User",
-                //    new XElement("Name", userName),
-                //    new XElement("Type", userType),
-                //    new XElement("PassWord", Database.Users[userName].SaltHashPassWord));
-                
-                //Database.UsersXML.Root.Add(User);
-                //Database.UsersXML.Save("Users.xml");
-
             }
             else
             {

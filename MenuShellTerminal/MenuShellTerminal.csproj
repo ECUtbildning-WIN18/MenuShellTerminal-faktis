@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Data.Common" Version="4.3.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.6.0-preview3-27014-02" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 
