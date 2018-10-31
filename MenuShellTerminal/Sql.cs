@@ -12,11 +12,8 @@ namespace MenuShellTerminal
             using (var connection = new System.Data.SqlClient.SqlConnection(connectionString))
             {
                 connection.Open();
-
                 var customerElements = new List<string>();
-
                 var customerColumn = new SqlCommand("SELECT * FROM [User]", connection);
-
                 var reader = customerColumn.ExecuteReader();
 
                 if (!reader.HasRows) return;
@@ -24,7 +21,7 @@ namespace MenuShellTerminal
                     for (var i = 0; i < reader.FieldCount; i++)
                         customerElements.Add(reader[i].ToString());
 
-                for (var i = 0; i < customerElements.Count; )
+                for (var i = 0; i < customerElements.Count; i+=3)
                 {
                     if (Database.UserNames.Contains(customerElements[i])) return;
                     Database.UserNames.Add(customerElements[i]);
@@ -41,12 +38,7 @@ namespace MenuShellTerminal
                             new Customer(customerElements[i],
                                 customerElements[i+1])); 
                     }
-                    i+=3;
-
                 }
-
-
-
             }
         }
     }
