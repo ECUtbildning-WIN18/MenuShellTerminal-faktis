@@ -2,6 +2,10 @@
 {
     public class SystemAdministrator : User
     {
-        public SystemAdministrator(string userName, string passWord) : base(userName, passWord, UserType.SystemAdministrator) { }
+       
+        public SystemAdministrator(string userName, string password) : base(userName, password, UserType.SystemAdministrator)
+        {
+            
+        }
     }
 }

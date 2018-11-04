@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Domain;
+using Domain.Contexts;
 using System.Data.SqlClient;
-using System.Text;
-using Domain;
 
 namespace Services
 {
@@ -10,15 +8,52 @@ namespace Services
     {
         public void Delete(string userName)
         {
-            var connectionString = "Data Source=(local);Initial Catalog=MenuShell; Integrated Security=true";
-            using (var connection = new System.Data.SqlClient.SqlConnection(connectionString))
+            using (var db = new MenuShellContext())
             {
-                connection.Open();
-                SqlCommand command= new SqlCommand($"DELETE FROM [User] WHERE UserName ='{userName}'", connection);
-                command.ExecuteNonQuery();
-                Database.Users.Remove(userName);
-                Database.UserNames.Remove(userName);
+                var customer = GetCustomerWithUserName(userName);
+                if (customer!=null)
+                {
+                   
+                    db.Customer.Remove(customer);
+                    db.SaveChanges();
+                    return;
+                }
+                var admin = GetAdminWithUserName(userName);
+                if (admin != null)
+                {
+
+                    db.Admin.Remove(admin);
+                    db.SaveChanges();
+                    return;
+                }
+
+
             }
+        }
+        private static SystemAdministrator GetAdminWithUserName(string username)
+        {
+            using (var context = new MenuShellContext())
+            {
+                
+                foreach (var admin in context.Admin)
+                {
+                    if (admin.UserName == username) return admin;
+                }
+            }
+            return null;
+        }
+
+        private static Customer GetCustomerWithUserName(string username)
+        {
+            using (var context = new MenuShellContext())
+            {
+
+                foreach (var customer in context.Customer)
+                {
+                    if (customer.UserName == username) return customer;
+                }
+            }
+            return null;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace MenuShellTerminal.Views
                 int indexOfUser = -1;
                 if (int.TryParse(Console.ReadLine(), out indexOfUser))
                 {
-                    Globals.UserToView = SearchAndFind.UserWithUserName(Globals.SearchResults[indexOfUser - 1]);
+                    Globals.UserToView = SearchAndFind.GetUserWithUserName(Globals.SearchResults[indexOfUser - 1]);
                     return new UserInformativeView();
                 }
             }

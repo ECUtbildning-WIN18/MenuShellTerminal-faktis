@@ -2,6 +2,6 @@
 {
     class NotDefined : User
     {
-        public NotDefined(string userName = "NotDefined", string passWord = "NotDefined") : base(userName, passWord, UserType.NotDefined) { }
+        public NotDefined(string userName = "NotDefined", string password = "NotDefined") : base(userName, password, UserType.NotDefined) { }
     }
 }

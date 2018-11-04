@@ -52,6 +52,7 @@ namespace MenuShellTerminal
                 "(Esc) to go back to Admin View"
             };
         }
+        
         public static View CurrentView = null;
         public static View ChangeView(string message)
         {

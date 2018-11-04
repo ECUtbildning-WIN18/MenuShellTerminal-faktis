@@ -13,5 +13,6 @@ namespace MenuShellTerminal.Views
             SearchAndFind.GenerateListOfUserNames(searchFor);
             return new ListUserView();
         }
+        
     }
 }

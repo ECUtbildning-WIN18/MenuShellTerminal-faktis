@@ -1,6 +1,6 @@
 ﻿using MenuShellTerminal.Views;
 using Domain;
-
+using Services;
 
 namespace MenuShellTerminal
 {
@@ -10,8 +10,6 @@ namespace MenuShellTerminal
         {
             
             var dataBase = new Database();
-            Sql sql = new Sql();
-            sql.InitSql();
             var running = true;
             View view;
             view = new LoginView();

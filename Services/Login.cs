@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Contexts;
 using System;
 
 namespace Services
@@ -28,7 +29,7 @@ namespace Services
 
                         return loginMessage;
                     }
-                    return  "AgainMyself";
+                    return "AgainMyself";
                 case ConsoleKey.N:
                     return "AgainMyself";
             }
@@ -38,23 +39,42 @@ namespace Services
 
         public static string TryLogin(string userName, string passWord)
         {
-            if (Database.UserNames.Contains(userName))
+
+            using (var db = new MenuShellContext())
             {
-                if (Database.Users[userName].PassWordPass(passWord))
+
+                
+                var user = GetUserWithUserName(userName);
+                if (user == null) return "Did not find user with name";
+                
+                if (user != null && user.PassWordPass(passWord))
                 {
-                    Globals.ActiveUser = Database.Users[userName];
+                    Globals.ActiveUser = user;
                     return "LogIn";
                 }
-                else
-                {
-                    return "Wrong password";
-                }
-            }
-            else
-            {
-                return "User with given UserName does not exist";
+                
+                else return "Wrong password";
+
+
 
             }
+        }
+     
+
+        private static User GetUserWithUserName(string username)
+        {
+            using (var context = new MenuShellContext())
+            {
+                foreach (var customer in context.Customer)
+                {
+                    if (customer.UserName == username) return customer;
+                }
+                foreach (var admin in context.Admin)
+                {
+                    if (admin.UserName == username) return admin;
+                }
+            }
+            return null;
         }
     }
 }

@@ -1,9 +1,10 @@
-using System;
-using System.Data.SqlClient;
 using Domain;
+using Domain.Contexts;
+using System;
 
 namespace Services
-{    public static class CreateUser
+{
+    public static class CreateUser
     {
         public static string CreateController(ConsoleKey key, string userName, string passWord, string userType)
         {
@@ -13,7 +14,7 @@ namespace Services
                     var createMessage = TryCreate(userName, passWord, userType);
                     if (createMessage == "Created")
                     {
-                            return "SystemAdministrator";
+                        return "SystemAdministrator";
                     }
                     else
                     {
@@ -23,65 +24,62 @@ namespace Services
                     return "SystemAdministrator";
                 case ConsoleKey.N:
                     break;
-                
+
 
             }
             return "AgainMyself";
         }
-        
-    
-        public static string TryCreate(string userName, string passWord, string userType)
-        {
 
-            if (!Database.UserNames.Contains(userName))
+
+        public static string TryCreate(string userName, string password, string userType,
+            string firstName = "???", string lastName = "???", string socialSecurityNumber = "???")
+        {
+            using (var db = new MenuShellContext())
             {
-                var connectionString = "Data Source=(local);Initial Catalog=MenuShell; Integrated Security=true";
-                using (var connection = new System.Data.SqlClient.SqlConnection(connectionString))
-                {
-                    connection.Open();
+                if (GetUserWithUserName(userName) == null)
 
                     switch (userType)
                     {
                         case "Customer":
-                            Database.Users.Add(userName, new Customer(userName, passWord));
-                            Database.UserNames.Add(userName);
-                            SqlCommand command= new SqlCommand($"INSERT INTO [User] VALUES('{userName}','{passWord}','Customer')", connection);
-                            try
-                            {
-                                command.ExecuteNonQuery();
-                                
-                            }
-                            catch (SqlException ex)
-                            {
-                                return "Sql command did not work";
-                            }
-                            
+                            var customer = new Customer(firstName, lastName, socialSecurityNumber, userName, password);
+                            db.Customer.Add(customer);
+                            db.SaveChanges();
                             return "Created";
                         case "Admin":
-                            Database.Users.Add(userName, new SystemAdministrator(userName, passWord));
-                            Database.UserNames.Add(userName);
-                            command= new SqlCommand($"INSERT INTO [User] VALUES('{userName}','{passWord}','SystemAdministrator')", connection);
-                            try
-                            {
-                                command.ExecuteNonQuery();
-                                
-                            }
-                            catch (SqlException ex)
-                            {
-                                return "Sql command did not work";
-                            }
+                            var admin = new SystemAdministrator(userName, password);
+                            db.Admin.Add(admin);
+                            db.SaveChanges();
                             return "Created";
                         default:
                             return userType + " is NOT a valid type.\n" +
                                    "Valid types are:\n" +
                                    "Customer, Admin";
                     }
+
+
+                else
+                {
+                    return "User with given UserName already exist";
+
                 }
             }
-            else
+        }
+        private static User GetUserWithUserName(string username)
+        {
+            using (var context = new MenuShellContext())
             {
-                return "User with given UserName already exist";
+                foreach (var customer in context.Customer)
+                {
+                    if (customer.UserName == username) return customer;
+                }
+                foreach (var admin in context.Admin)
+                {
+                    if (admin.UserName == username) return admin;
+                }
             }
+            return null;
         }
     }
 }
+
+

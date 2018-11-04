@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Contexts;
 using System.Collections.Generic;
 
 namespace Services
@@ -7,26 +8,56 @@ namespace Services
     {
         public static void GenerateListOfUserNames(string searchCriteria)
         {
-            Globals.SearchResults = new List<string>();
-            foreach (string userName in Database.UserNames)
+            using (var context = new MenuShellContext())
             {
-                var different = false;
-                for (int i = 0; i < searchCriteria.Length; i++)
+                Globals.SearchResults = new List<string>();
+                foreach (var customer in context.Customer)
                 {
-                    if (userName.Length < i) break;
+                    var different = false;
+                    for (int i = 0; i < searchCriteria.Length; i++)
+                    {
+                        if (customer.UserName.Length < i) break;
 
-                    different = searchCriteria[i] != userName[i];
+                        different = searchCriteria[i] != customer.UserName[i];
 
-                    if (different) break;
+                        if (different) break;
 
+                    }
+                    if (!different) Globals.SearchResults.Add(customer.UserName);
                 }
-                if (!different) Globals.SearchResults.Add(userName);
+                foreach (var admin in context.Admin)
+                {
+                    var different = false;
+                    for (int i = 0; i < searchCriteria.Length; i++)
+                    {
+                        if (admin.UserName.Length < i) break;
+
+                        different = searchCriteria[i] != admin.UserName[i];
+
+                        if (different) break;
+
+                    }
+                    if (!different) Globals.SearchResults.Add(admin.UserName);
+                }
             }
         }
 
-        public static User UserWithUserName(string userName)
+        
+        public static User GetUserWithUserName(string username)
         {
-            return Database.Users[userName];
+            using (var context = new MenuShellContext())
+            {
+                foreach (var customer in context.Customer)
+                {
+                    if (customer.UserName == username) return customer;
+                }
+                foreach (var admin in context.Admin)
+                {
+                    if (admin.UserName == username) return admin;
+                }
+            }
+            return null;
         }
+
     }
 }

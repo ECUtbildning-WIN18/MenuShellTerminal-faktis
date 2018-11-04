@@ -35,8 +35,9 @@ namespace MenuShellTerminal
                     else if (customerElements[i+2] == "Customer")
                     {
                         Database.Users.Add(customerElements[i],
-                            new Customer(customerElements[i],
+                            new Customer("?","?","?",customerElements[i],
                                 customerElements[i+1])); 
+                        
                     }
                 }
             }
