@@ -24,9 +24,8 @@ namespace Services
                     return "SystemAdministrator";
                 case ConsoleKey.N:
                     break;
-
-
             }
+
             return "AgainMyself";
         }
 
@@ -36,8 +35,8 @@ namespace Services
         {
             using (var db = new MenuShellContext())
             {
-                if (GetUserWithUserName(userName) == null)
-
+                if (SearchAndFind.GetUserWithUserName(userName) == null)
+                {
                     switch (userType)
                     {
                         case "Customer":
@@ -55,31 +54,14 @@ namespace Services
                                    "Valid types are:\n" +
                                    "Customer, Admin";
                     }
-
-
+                }
                 else
                 {
                     return "User with given UserName already exist";
+                }
+            }
+        }
 
-                }
-            }
-        }
-        private static User GetUserWithUserName(string username)
-        {
-            using (var context = new MenuShellContext())
-            {
-                foreach (var customer in context.Customer)
-                {
-                    if (customer.UserName == username) return customer;
-                }
-                foreach (var admin in context.Admin)
-                {
-                    if (admin.UserName == username) return admin;
-                }
-            }
-            return null;
-        }
+        
     }
 }
-
-

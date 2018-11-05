@@ -14,67 +14,37 @@ namespace Services
                     var loginMessage = TryLogin(userName, passWord);
                     if (loginMessage == "LogIn")
                     {
-
-                        if (Globals.ActiveUser.UserType == UserType.SystemAdministrator)
+                        switch (Globals.ActiveUser.UserType)
                         {
-                            return "SystemAdministrator";
-                        }
-                        else if (Globals.ActiveUser.UserType == UserType.Customer)
-                        {
-                            return "Customer";
+                            case UserType.SystemAdministrator:
+                                return "SystemAdministrator";
+                            case UserType.Customer:
+                                return "Customer";
                         }
                     }
-                    else
-                    {
+                    else return loginMessage;
 
-                        return loginMessage;
-                    }
-                    return "AgainMyself";
+                    break;
                 case ConsoleKey.N:
                     return "AgainMyself";
             }
             return "AgainMyself";
-
         }
 
         public static string TryLogin(string userName, string passWord)
         {
-
             using (var db = new MenuShellContext())
             {
-
-                
-                var user = GetUserWithUserName(userName);
+                var user = SearchAndFind.GetUserWithUserName(userName);
                 if (user == null) return "Did not find user with name";
                 
-                if (user != null && user.PassWordPass(passWord))
+                if (user.PassWordPass(passWord))
                 {
                     Globals.ActiveUser = user;
                     return "LogIn";
                 }
-                
                 else return "Wrong password";
-
-
-
             }
-        }
-     
-
-        private static User GetUserWithUserName(string username)
-        {
-            using (var context = new MenuShellContext())
-            {
-                foreach (var customer in context.Customer)
-                {
-                    if (customer.UserName == username) return customer;
-                }
-                foreach (var admin in context.Admin)
-                {
-                    if (admin.UserName == username) return admin;
-                }
-            }
-            return null;
         }
     }
 }

@@ -8,7 +8,6 @@ namespace Domain
         public string UserName { get; private set; }      
         public UserType UserType { get; private set; }
         public int Id { get; private set; }
-        //private string passWord;
         public string Password { get; private set; }
         
         public User( string userName , string password , UserType userType)

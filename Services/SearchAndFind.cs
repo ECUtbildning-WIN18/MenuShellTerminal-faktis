@@ -42,7 +42,6 @@ namespace Services
             }
         }
 
-        
         public static User GetUserWithUserName(string username)
         {
             using (var context = new MenuShellContext())
@@ -58,6 +57,5 @@ namespace Services
             }
             return null;
         }
-
     }
 }
