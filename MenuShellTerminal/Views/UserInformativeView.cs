@@ -18,4 +18,5 @@ namespace MenuShellTerminal.Views
             return this;
         }
     }
+    
 }

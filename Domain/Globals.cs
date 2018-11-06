@@ -8,5 +8,6 @@ namespace Domain
     {
         public static List<string> screenStrings = new List<string> { "Empty" };
     }
+    
 }
 

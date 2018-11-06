@@ -12,6 +12,7 @@ namespace MenuShellTerminal.Views
         private string password = "False";
         private int xPos = 0;
         private int yPos = 0;
+        
         public void Init()
         {
             xOn = false;

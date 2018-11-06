@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Contexts;
 using System;
 
 namespace Services
@@ -13,47 +14,36 @@ namespace Services
                     var loginMessage = TryLogin(userName, passWord);
                     if (loginMessage == "LogIn")
                     {
-
-                        if (Globals.ActiveUser.UserType == UserType.SystemAdministrator)
+                        switch (Globals.ActiveUser.UserType)
                         {
-                            return "SystemAdministrator";
-                        }
-                        else if (Globals.ActiveUser.UserType == UserType.Customer)
-                        {
-                            return "Customer";
+                            case UserType.SystemAdministrator:
+                                return "SystemAdministrator";
+                            case UserType.Customer:
+                                return "Customer";
                         }
                     }
-                    else
-                    {
+                    else return loginMessage;
 
-                        return loginMessage;
-                    }
-                    return  "AgainMyself";
+                    break;
                 case ConsoleKey.N:
                     return "AgainMyself";
             }
             return "AgainMyself";
-
         }
 
         public static string TryLogin(string userName, string passWord)
         {
-            if (Database.UserNames.Contains(userName))
+            using (var db = new MenuShellContext())
             {
-                if (Database.Users[userName].PassWordPass(passWord))
+                var user = SearchAndFind.GetUserWithUserName(userName);
+                if (user == null) return "Did not find user with name";
+                
+                if (user.PassWordPass(passWord))
                 {
-                    Globals.ActiveUser = Database.Users[userName];
+                    Globals.ActiveUser = user;
                     return "LogIn";
                 }
-                else
-                {
-                    return "Wrong password";
-                }
-            }
-            else
-            {
-                return "User with given UserName does not exist";
-
+                else return "Wrong password";
             }
         }
     }
