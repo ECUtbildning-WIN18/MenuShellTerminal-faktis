@@ -20,30 +20,28 @@ namespace Services
                                 return "SystemAdministrator";
                             case UserType.Customer:
                                 return "Customer";
+                            
                         }
                     }
-                    else return loginMessage;
-
-                    break;
+                    return loginMessage;
+                    
                 case ConsoleKey.N:
                     return "AgainMyself";
             }
             return "AgainMyself";
         }
 
-        public static string TryLogin(string userName, string passWord)
+        private static string TryLogin(string userName, string passWord)
         {
             using (var db = new MenuShellContext())
             {
                 var user = SearchAndFind.GetUserWithUserName(userName);
                 if (user == null) return "Did not find user with name";
+
+                if (!user.PassWordPass(passWord)) return "Wrong password";
                 
-                if (user.PassWordPass(passWord))
-                {
-                    Globals.ActiveUser = user;
-                    return "LogIn";
-                }
-                else return "Wrong password";
+                Globals.ActiveUser = user;
+                return "LogIn";
             }
         }
     }
