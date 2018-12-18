@@ -4,16 +4,16 @@ using Services;
 
 namespace MenuShellTerminal.Views
 {
-    class AddUserView : View
+    internal class AddUserView : View
     {
-        private bool xOn = false;
-        private bool yOn = false;
-        private int xPos = 0;
-        private int yPos = 0;
+        private bool _xOn = false;
+        private bool _yOn = false;
+        private int _xPos = 0;
+        private int _yPos = 0;
 
-        private string password = "False";
-        public string UserType { get; private set; } = "False";
-        public string UserName { get; private set; } = "False";
+        private string _password = "False";
+        private string _userType  = "False";
+        private string _userName  = "False";
 
         public override View ViewIt()
         {
@@ -25,43 +25,43 @@ namespace MenuShellTerminal.Views
             Console.Clear();
             var message = CreateUser.CreateController(
                 key.Key, 
-                UserName, password, UserType);
+                _userName, _password, _userType);
             if(message != "SystemAdministrator" && message != "AgainMyself")
             {
                 Console.WriteLine(message);
                 Thread.Sleep(2000);                
             }
-            UserName = "False";
-            password = "False";
-            UserType = "False";
+            _userName = "False";
+            _password = "False";
+            _userType = "False";
             return ViewHandler.ChangeView(message);
         }
 
         private void Input()
         {
-            foreach (string screenString in ViewHandler.AddUserScreen())
+            foreach (var screenString in ViewHandler.AddUserScreen())
             {
-                if (xOn && yOn)
+                if (_xOn && _yOn)
                 {
-                    yPos = int.Parse(screenString);
-                    Console.SetCursorPosition(xPos, yPos);
-                    if (UserName == "False")
-                        UserName = Console.ReadLine();
-                    else if (password == "False")
-                        password = Console.ReadLine();
-                    else if (UserType == "False")
-                        UserType = Console.ReadLine();
-                    xOn = false;
-                    yOn = false;
+                    _yPos = int.Parse(screenString);
+                    Console.SetCursorPosition(_xPos, _yPos);
+                    if (_userName == "False")
+                        _userName = Console.ReadLine();
+                    else if (_password == "False")
+                        _password = Console.ReadLine();
+                    else if (_userType == "False")
+                        _userType = Console.ReadLine();
+                    _xOn = false;
+                    _yOn = false;
                     
                 }
-                else if (xOn && !yOn)
+                else if (_xOn && !_yOn)
                 {
-                    xPos = int.Parse(screenString);
-                    yOn = true;
+                    _xPos = int.Parse(screenString);
+                    _yOn = true;
                 }
                 else if (screenString == "Input")
-                    xOn = true;
+                    _xOn = true;
                 else
                     Console.WriteLine(screenString);
             }

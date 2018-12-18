@@ -13,18 +13,16 @@ namespace MenuShellTerminal.Views
             var iterator = 1;
             if (Globals.SearchResults.Count != 0)
             {
-                foreach (string user in Globals.SearchResults)
+                foreach (var user in Globals.SearchResults)
                 {
                     Console.WriteLine($"{iterator++}: {user}");
 
                 }
                 Console.WriteLine("Index of User to view: ");
-                int indexOfUser = -1;
-                if (int.TryParse(Console.ReadLine(), out indexOfUser))
-                {
-                    Globals.UserToView = SearchAndFind.GetUserWithUserName(Globals.SearchResults[indexOfUser - 1]);
-                    return new UserInformativeView();
-                }
+                if (!int.TryParse(Console.ReadLine(), out var indexOfUser)) return new SystemAdministratorView();
+                
+                Globals.UserToView = SearchAndFind.GetUserWithUserName(Globals.SearchResults[indexOfUser - 1]);
+                return new UserInformativeView();
             }
             else
             {

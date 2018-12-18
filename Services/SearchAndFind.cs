@@ -14,7 +14,7 @@ namespace Services
                 foreach (var customer in context.Customer)
                 {
                     var different = false;
-                    for (int i = 0; i < searchCriteria.Length; i++)
+                    for (var i = 0; i < searchCriteria.Length; i++)
                     {
                         if (customer.UserName.Length < i) break;
 
@@ -28,7 +28,7 @@ namespace Services
                 foreach (var admin in context.Admin)
                 {
                     var different = false;
-                    for (int i = 0; i < searchCriteria.Length; i++)
+                    for (var i = 0; i < searchCriteria.Length; i++)
                     {
                         if (admin.UserName.Length < i) break;
 

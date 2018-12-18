@@ -11,6 +11,7 @@ namespace Services
             switch (key)
             {
                 case ConsoleKey.Y:
+                {
                     var loginMessage = TryLogin(userName, passWord);
                     if (loginMessage == "LogIn")
                     {
@@ -20,15 +21,16 @@ namespace Services
                                 return "SystemAdministrator";
                             case UserType.Customer:
                                 return "Customer";
-                            
                         }
                     }
+
                     return loginMessage;
-                    
+                }
                 case ConsoleKey.N:
                     return "AgainMyself";
+                default:
+                    return "AgainMyself";
             }
-            return "AgainMyself";
         }
 
         private static string TryLogin(string userName, string passWord)

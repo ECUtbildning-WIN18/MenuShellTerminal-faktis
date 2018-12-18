@@ -40,7 +40,7 @@ namespace Services
                     switch (userType)
                     {
                         case "Customer":
-                            var customer = new Customer(firstName, lastName, socialSecurityNumber, userName, password);
+                            var customer = new Customer( userName, password);
                             db.Customer.Add(customer);
                             db.SaveChanges();
                             return "Created";

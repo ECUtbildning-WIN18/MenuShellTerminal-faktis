@@ -10,11 +10,14 @@ namespace MenuShellTerminal.Views
             Console.Clear();
             Console.Title = "Customer";
             Console.WriteLine($"-----{Globals.ActiveUser.UserName}-----");
+            Console.WriteLine("(A)dd expense");
             Console.WriteLine("(D)elete User");
             Console.WriteLine("(L)og Out");
             var key = Console.ReadKey().Key;
             switch (key)
             {
+                case ConsoleKey.A:
+                    return new ExpenseView();
                 case ConsoleKey.D:
                     return new DeleteUserView(Globals.ActiveUser.UserName);
                 case ConsoleKey.L:

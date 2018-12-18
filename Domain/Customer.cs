@@ -1,16 +1,20 @@
-﻿namespace Domain
+﻿using System.Collections.Generic;
+
+namespace Domain
 {
     public class Customer : User
     {
        
-        public string FirstName { get; private set; }
-        public string LastName { get; private set; }
-        public string SocialSecurityNumber { get; private set; }
-        public Customer(string userName, string password, string firstName, string lastName, string socialSecurityNumber) : base(userName, password, UserType.Customer)
+        //public List<Expense> Expenses { get; set; }
+//        public string LastName { get; private set; }
+//        public string SocialSecurityNumber { get; private set; }
+        public Customer(string userName, string password) : base(userName, password, UserType.Customer)
         {
-            FirstName = firstName;
-            LastName = lastName;
-            SocialSecurityNumber = socialSecurityNumber;
         }
+
+//        public void AddExpense(string itemName, decimal itemPrice, string itemType)
+//        {
+//            Expenses.Add(new Expense(itemName,itemPrice, itemType));
+//        }
     }
 }
