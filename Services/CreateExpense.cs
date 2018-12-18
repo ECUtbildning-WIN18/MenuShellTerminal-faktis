@@ -9,7 +9,8 @@ namespace Services
         {
             using (var db = new MenuShellContext())
             {
-                db.Expense.Add(new Expense(itemName,itemPrice,itemType,userId));
+                var expense = new Expense(itemName, itemPrice, itemType, userId);
+                db.Expense.Add(expense);
                 db.SaveChanges();
             }
         }
